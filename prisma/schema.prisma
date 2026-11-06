@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Movie {
+  id          Int     @id @default(autoincrement())
+  title       String  @db.VarChar(255)
+  year        Int
+  director    String  @db.VarChar(255)
+  genres      String  @db.Text
+  rating      Decimal @db.Decimal(3, 1)
+  duration    String  @db.VarChar(50)
+  synopsis    String  @db.Text
+  posterUrl   String  @map("poster_url") @db.Text
+  castMembers String  @map("cast_members") @db.Text
+
+  watchlists Watchlist[]
+  reviews    Review[]
+
+  @@map("movies")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(255)
+  username  String   @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  watchlists Watchlist[]
+  reviews    Review[]
+
+  @@map("users")
+}
+
+model Watchlist {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  movieId   Int      @map("movie_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("watchlists")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  movieId   Int      @map("movie_id")
+  rating    Int      @db.SmallInt
+  review    String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("reviews")
+}
