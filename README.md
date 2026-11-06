@@ -46,7 +46,7 @@ PORT=8000
 NODE_ENV=development
 
 # URL koneksi database PostgreSQL
-DATABASE_URL="postgresql://username:password@localhost:5432/movie_watchlist?schema=public"
+DATABASE_URL="postgre-pool"
 
 # Secret key untuk penandatanganan JWT Token
 JWT_SECRET="ganti-dengan-secret-key-yang-aman"
@@ -139,6 +139,12 @@ Spesifikasi skenario pengujian lengkap dapat dilihat pada [test-case.md](./test-
 ## 📚 Ringkasan Endpoint API
 
 Semua endpoint diawali dengan prefix `/api`.
+
+### 0. API Documentation (`/api/docs`)
+
+| Method | Endpoint | Deskripsi | Auth |
+| :--- | :--- | :--- | :--- |
+| GET | `/api/docs` | Membuka dokumentasi interaktif OpenAPI UI | Publik |
 
 ### 1. Auth (`/api/auth`)
 
