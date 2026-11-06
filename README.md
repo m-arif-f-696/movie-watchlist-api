@@ -130,6 +130,7 @@ bun test
 bun test tests/auth.test.ts
 bun test tests/movie.test.ts
 bun test tests/watchlist.test.ts
+bun test tests/watched.test.ts
 ```
 
 Spesifikasi skenario pengujian lengkap dapat dilihat pada [test-case.md](./test-case.md).
