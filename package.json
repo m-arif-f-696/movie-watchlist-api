@@ -1,6 +1,7 @@
 {
   "name": "movie-watchlist-api",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "build": "prisma generate",
