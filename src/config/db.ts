@@ -1,19 +1,14 @@
 import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
+import { attachDatabasePool } from "@vercel/functions";
 import { env } from "./env";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma?: PrismaClient;
-};
+const pool = new Pool({
+  connectionString: env.DATABASE_URL, // URL yang lewat pool Prisma
+  max: 3,
+});
 
-export const db =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    adapter: new PrismaPg({
-      connectionString: env.DATABASE_URL,
-    }),
-  });
+attachDatabasePool(pool);
 
-if (env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = db;
-}
+export const db = new PrismaClient({ adapter: new PrismaPg(pool) });
