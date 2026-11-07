@@ -8,6 +8,7 @@ export const errorHandler = new Elysia({name : "error-handler"})
 .onError({as: "global"},({code,set, error, log}) => {
     // 1. Tangkap Custom App Error yang dilempar oleh Service Layer
     if (error instanceof AppError) {
+      log?.warn(error)
       set.status = error.statusCode;
       return {
         message: error.message,
@@ -16,6 +17,7 @@ export const errorHandler = new Elysia({name : "error-handler"})
 
     // 2. Tangkap Error Validasi bawaan TypeBox (t) dari Request Body/Params/Query
     if (code === 'VALIDATION') {
+      log?.warn(error)
       set.status = 422;
 
       const errors = error.all.map((e) => ({
