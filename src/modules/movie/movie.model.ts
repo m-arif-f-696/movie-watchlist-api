@@ -16,7 +16,8 @@ export const movieModel = t.Object({
 export const MovieModel = {
     movieQuery: t.Object({
         genre: t.Optional(t.String({ examples: "Sci-Fi" })),
-        search: t.Optional(t.String({ examples: "Inception" }))
+        search: t.Optional(t.String({ examples: "Inception" })),
+        shuffle: t.Optional(t.Boolean({ examples: true }))
     }),
     movieParams: t.Object({
         id: t.Integer({ examples: 1 })
@@ -25,7 +26,7 @@ export const MovieModel = {
     movieListResponse: t.Array(movieModel),
 
     movieRecomendRequest: t.Object({
-        prompt: t.String({ examples: "I want watch a movie that is romantic and have a good ending" })
+        prompt: t.String({ examples: "I want watch a movie that is romantic and have a good ending" , minLength : 1})
     }),
 
     movieRecomendResponse: t.Object({

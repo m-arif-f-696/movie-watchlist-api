@@ -143,9 +143,9 @@ Semua endpoint diawali dengan prefix `/api`.
 
 ### 0. API Documentation (`/api/docs`)
 
-| Method | Endpoint | Deskripsi | Auth |
-| :--- | :--- | :--- | :--- |
-| GET | `/api/docs` | Membuka dokumentasi interaktif OpenAPI UI | Publik |
+| Method | Endpoint    | Deskripsi                                 | Auth   |
+| :----- | :---------- | :---------------------------------------- | :----- |
+| GET    | `/api/docs` | Membuka dokumentasi interaktif OpenAPI UI | Publik |
 
 ### 1. Auth (`/api/auth`)
 
@@ -156,10 +156,10 @@ Semua endpoint diawali dengan prefix `/api`.
 
 ### 2. Movies (`/api/movies`)
 
-| Method | Endpoint          | Deskripsi                                    | Auth   |
-| ------ | ----------------- | -------------------------------------------- | ------ |
-| `GET`  | `/api/movies`     | Ambil daftar film (Query: `search`, `genre`) | Publik |
-| `GET`  | `/api/movies/:id` | Ambil detail film berdasarkan ID             | Publik |
+| Method | Endpoint          | Deskripsi                                               | Auth   |
+| ------ | ----------------- | ------------------------------------------------------- | ------ |
+| `GET`  | `/api/movies`     | Ambil daftar film (Query: `search`, `genre`, `shuffle`) | Publik |
+| `GET`  | `/api/movies/:id` | Ambil detail film berdasarkan ID                        | Publik |
 
 ### 3. Watchlist (`/api/watchlist`)
 

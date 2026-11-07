@@ -23,9 +23,9 @@ export class MovieService {
 
     public static async getMovies(query: MovieQuery | null = null, log:Logger): Promise<MovieListResponse>
     {
-        const {genre, search} = query ?? {};
+        const {genre, search, shuffle} = query ?? {};
 
-        const listMovies = await db.movie.findMany({
+        let listMovies = await db.movie.findMany({
             where : {
                 ...(genre ? {
                 genres: {
@@ -44,6 +44,8 @@ export class MovieService {
         log.debug(listMovies);
 
         if(listMovies.length < 1) throw new NotFoundError("Movies not found");
+
+        if (shuffle) listMovies = MovieService.shuffleArray(listMovies);
         
 
         return listMovies.map(MovieService.formatMovie);
@@ -106,6 +108,15 @@ export class MovieService {
         log.debug(resultObject);
         
         return resultObject;
+    }
+
+    private static shuffleArray<T>(array: T[]): T[] {
+        const shuffledArray = [...array];
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+        return shuffledArray;
     }
 }
 
